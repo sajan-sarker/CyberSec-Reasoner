@@ -3,6 +3,10 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# temporaray files
+temp.py
+temp.ipynb
+
 # C extensions
 *.so
 
@@ -138,6 +142,7 @@ celerybeat.pid
 .env
 .envrc
 .venv
+cvenv/
 env/
 venv/
 ENV/
