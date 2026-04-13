@@ -1,0 +1,554 @@
+_name_or_path:
+    value: ./models/qwen3.5-4b-lora-sft/
+_wandb:
+    value:
+        cli_version: 0.25.1
+        e:
+            48vzvkgn9o3ya69vfky28j2oai1jyrdh:
+                cpu_count: 20
+                cpu_count_logical: 20
+                disk:
+                    /:
+                        total: "747760488448"
+                        used: "107006103552"
+                email: sajan.k.sarker@gmail.com
+                executable: /opt/venv/bin/python
+                git:
+                    commit: a1ab308fc2a3057397b2265bdfb51325b8b5bf4a
+                    remote: https://github.com/Mahdi-CV/rocm-pytorch-notebooks
+                gpu: N/A
+                gpu_amd:
+                    - id: "0"
+                      maxPower: "750.0"
+                      mclkRange: 900Mhz - 1300Mhz
+                      model: "0x74b5"
+                      performanceLevel: auto
+                      sclkRange: 500Mhz - 2100Mhz
+                      series: N/A
+                      sku: M3000100
+                      uniqueId: "0x935f9ce948e2e443"
+                      vbiosVersion: 113-M3000100-103
+                      vendor: Advanced Micro Devices, Inc. [AMD/ATI]
+                gpu_count: 1
+                host: c94282c0ca6c
+                memory:
+                    total: "253347164160"
+                os: Linux-6.8.0-84-generic-x86_64-with-glibc2.35
+                program: -m training.cold_start_rsft_train
+                python: CPython 3.10.12
+                root: /shared-docker/CyberSec-Reasoner
+                startedAt: "2026-04-13T05:41:49.076947Z"
+                writerId: 48vzvkgn9o3ya69vfky28j2oai1jyrdh
+        m:
+            - "1": train/global_step
+              "6":
+                - 3
+              "7": []
+            - "2": '*'
+              "5": 1
+              "6":
+                - 1
+              "7": []
+        python_version: 3.10.12
+        t:
+            "1":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 84
+                - 98
+                - 105
+            "2":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 84
+                - 98
+                - 105
+            "3":
+                - 7
+                - 13
+                - 15
+                - 16
+                - 19
+                - 66
+            "4": 3.10.12
+            "5": 0.25.1
+            "6": 5.5.1
+            "9":
+                "1": transformers_trainer
+            "10":
+                - 21
+            "12": 0.25.1
+            "13": linux-x86_64
+accelerator_config:
+    value:
+        dispatch_batches: null
+        even_batches: true
+        gradient_accumulation_kwargs: null
+        non_blocking: false
+        split_batches: false
+        use_seedable_sampler: true
+activation_offloading:
+    value: false
+adam_beta1:
+    value: 0.9
+adam_beta2:
+    value: 0.999
+adam_epsilon:
+    value: 1e-08
+architectures:
+    value:
+        - Qwen3_5ForCausalLM
+assistant_only_loss:
+    value: true
+attention_bias:
+    value: false
+attention_dropout:
+    value: 0
+attn_output_gate:
+    value: true
+auto_find_batch_size:
+    value: false
+average_tokens_across_devices:
+    value: true
+batch_eval_metrics:
+    value: false
+bf16:
+    value: true
+bf16_full_eval:
+    value: false
+bos_token_id:
+    value: null
+chat_template_path:
+    value: null
+chunk_size_feed_forward:
+    value: 0
+completion_only_loss:
+    value: null
+data_seed:
+    value: null
+dataloader_drop_last:
+    value: false
+dataloader_num_workers:
+    value: 8
+dataloader_persistent_workers:
+    value: false
+dataloader_pin_memory:
+    value: true
+dataloader_prefetch_factor:
+    value: null
+dataset_kwargs:
+    value: null
+dataset_num_proc:
+    value: null
+dataset_text_field:
+    value: text
+ddp_backend:
+    value: null
+ddp_broadcast_buffers:
+    value: null
+ddp_bucket_cap_mb:
+    value: null
+ddp_find_unused_parameters:
+    value: null
+ddp_timeout:
+    value: 1800
+debug:
+    value: []
+deepspeed:
+    value: null
+disable_tqdm:
+    value: false
+do_eval:
+    value: false
+do_predict:
+    value: false
+do_train:
+    value: false
+dtype:
+    value: bfloat16
+enable_jit_checkpoint:
+    value: false
+entity:
+    value: circuit
+eos_token:
+    value: <EOS_TOKEN>
+eos_token_id:
+    value: 248046
+eval_accumulation_steps:
+    value: null
+eval_delay:
+    value: 0
+eval_do_concat_batches:
+    value: true
+eval_on_start:
+    value: false
+eval_packing:
+    value: null
+eval_steps:
+    value: null
+eval_strategy:
+    value: "no"
+eval_use_gather_object:
+    value: false
+fp16:
+    value: false
+fp16_full_eval:
+    value: false
+fsdp:
+    value: []
+fsdp_config:
+    value:
+        min_num_params: 0
+        xla: false
+        xla_fsdp_grad_ckpt: false
+        xla_fsdp_v2: false
+full_attention_interval:
+    value: 4
+full_determinism:
+    value: false
+gradient_accumulation_steps:
+    value: 2
+gradient_checkpointing:
+    value: true
+gradient_checkpointing_kwargs:
+    value: null
+greater_is_better:
+    value: null
+head_dim:
+    value: 256
+hidden_act:
+    value: silu
+hidden_size:
+    value: 2560
+hub_always_push:
+    value: false
+hub_model_id:
+    value: null
+hub_private_repo:
+    value: null
+hub_revision:
+    value: null
+hub_strategy:
+    value: every_save
+hub_token:
+    value: <HUB_TOKEN>
+id2label:
+    value:
+        "0": LABEL_0
+        "1": LABEL_1
+ignore_data_skip:
+    value: false
+include_for_metrics:
+    value: []
+include_num_input_tokens_seen:
+    value: "no"
+initializer_range:
+    value: 0.02
+intermediate_size:
+    value: 9216
+is_encoder_decoder:
+    value: false
+label_names:
+    value: null
+label_smoothing_factor:
+    value: 0
+label2id:
+    value:
+        LABEL_0: 0
+        LABEL_1: 1
+layer_types:
+    value:
+        - linear_attention
+        - linear_attention
+        - linear_attention
+        - full_attention
+        - linear_attention
+        - linear_attention
+        - linear_attention
+        - full_attention
+        - linear_attention
+        - linear_attention
+        - linear_attention
+        - full_attention
+        - linear_attention
+        - linear_attention
+        - linear_attention
+        - full_attention
+        - linear_attention
+        - linear_attention
+        - linear_attention
+        - full_attention
+        - linear_attention
+        - linear_attention
+        - linear_attention
+        - full_attention
+        - linear_attention
+        - linear_attention
+        - linear_attention
+        - full_attention
+        - linear_attention
+        - linear_attention
+        - linear_attention
+        - full_attention
+learning_rate:
+    value: 4e-06
+length_column_name:
+    value: length
+liger_kernel_config:
+    value: null
+linear_conv_kernel_dim:
+    value: 4
+linear_key_head_dim:
+    value: 128
+linear_num_key_heads:
+    value: 16
+linear_num_value_heads:
+    value: 32
+linear_value_head_dim:
+    value: 128
+load_best_model_at_end:
+    value: false
+local_rank:
+    value: -1
+log_level:
+    value: passive
+log_level_replica:
+    value: warning
+log_model:
+    value: false
+log_on_each_node:
+    value: true
+logging_dir:
+    value: ./logs/qwen3.5-4b-rsft
+logging_first_step:
+    value: false
+logging_nan_inf_filter:
+    value: true
+logging_steps:
+    value: 20
+logging_strategy:
+    value: steps
+loss_type:
+    value: nll
+lr_scheduler_kwargs:
+    value: null
+lr_scheduler_type:
+    value: cosine
+mamba_ssm_dtype:
+    value: float32
+max_grad_norm:
+    value: 0.5
+max_length:
+    value: 4096
+max_position_embeddings:
+    value: 262144
+max_steps:
+    value: -1
+metric_for_best_model:
+    value: null
+mlp_only_layers:
+    value: []
+model/num_parameters:
+    value: 4248218624
+model_init_kwargs:
+    value: null
+model_type:
+    value: qwen3_5_text
+mtp_num_hidden_layers:
+    value: 1
+mtp_use_dedicated_embeddings:
+    value: false
+neftune_noise_alpha:
+    value: 0.002
+notes:
+    value: Reasoning Supervised Fine-tuning on Qwen3.5-4B SFT finetuned model with LoRA on 1K Primus-Reasoning dataset with r=32, alpha=64, lr=4e-6, batch size=8.
+num_attention_heads:
+    value: 16
+num_hidden_layers:
+    value: 32
+num_key_value_heads:
+    value: 4
+num_train_epochs:
+    value: 2
+optim:
+    value: paged_adamw_32bit
+optim_args:
+    value: null
+optim_target_modules:
+    value: null
+output_attentions:
+    value: false
+output_dir:
+    value: ./checkpoints/qwen3.5-4b-rsft
+output_hidden_states:
+    value: false
+packing:
+    value: false
+packing_strategy:
+    value: bfd
+pad_to_multiple_of:
+    value: null
+pad_token:
+    value: <PAD_TOKEN>
+pad_token_id:
+    value: 248044
+padding_free:
+    value: false
+parallelism_config:
+    value: null
+partial_rotary_factor:
+    value: 0.25
+peft_config:
+    value:
+        default:
+            alora_invocation_tokens: null
+            arrow_config: null
+            auto_mapping: null
+            base_model_name_or_path: ./models/qwen3.5-4b-lora-sft/
+            bias: none
+            corda_config: null
+            ensure_weight_tying: false
+            eva_config: null
+            exclude_modules: null
+            fan_in_fan_out: false
+            inference_mode: false
+            init_lora_weights: true
+            layer_replication: null
+            layers_pattern: null
+            layers_to_transform: null
+            lora_alpha: 64
+            lora_bias: false
+            lora_dropout: 0.05
+            megatron_config: null
+            megatron_core: megatron.core
+            modules_to_save: null
+            peft_type: LORA
+            peft_version: 0.18.1
+            qalora_group_size: 16
+            r: 32
+            revision: null
+            runtime_config:
+                ephemeral_gpu_offload: false
+            target_modules:
+                - v_proj
+                - down_proj
+                - o_proj
+                - k_proj
+                - q_proj
+                - gate_proj
+                - up_proj
+            target_parameters: null
+            task_type: CAUSAL_LM
+            trainable_token_indices: null
+            use_dora: false
+            use_qalora: false
+            use_rslora: true
+per_device_eval_batch_size:
+    value: 8
+per_device_train_batch_size:
+    value: 4
+prediction_loss_only:
+    value: false
+problem_type:
+    value: null
+project:
+    value: huggingface
+push_to_hub:
+    value: false
+remove_unused_columns:
+    value: false
+report_to:
+    value:
+        - wandb
+restore_callback_states_from_checkpoint:
+    value: false
+resume_from_checkpoint:
+    value: null
+return_dict:
+    value: true
+rms_norm_eps:
+    value: 1e-06
+rope_parameters:
+    value:
+        mrope_interleaved: true
+        mrope_section:
+            - 11
+            - 11
+            - 10
+        partial_rotary_factor: 0.25
+        rope_theta: 10000000
+        rope_type: default
+run_name:
+    value: qwen3.5-4b-lora-rsft
+save_on_each_node:
+    value: false
+save_only_model:
+    value: false
+save_steps:
+    value: 20
+save_strategy:
+    value: steps
+save_total_limit:
+    value: 3
+seed:
+    value: 42
+shuffle_dataset:
+    value: false
+skip_memory_metrics:
+    value: true
+tags:
+    value:
+        - qwen3.5
+        - instruction tuned
+        - 4b
+        - cold start
+        - pre grpo
+        - reasoning sft
+        - lora
+        - cybersecurity
+tf32:
+    value: false
+tie_word_embeddings:
+    value: true
+torch_compile:
+    value: false
+torch_compile_backend:
+    value: null
+torch_compile_mode:
+    value: null
+torch_empty_cache_steps:
+    value: null
+trackio_space_id:
+    value: trackio
+train_sampling_strategy:
+    value: random
+transformers_version:
+    value: 5.5.1
+truncation_mode:
+    value: keep_start
+use_cache:
+    value: false
+use_cpu:
+    value: false
+use_liger_kernel:
+    value: false
+vocab_size:
+    value: 248320
+warmup_ratio:
+    value: 0.1
+warmup_steps:
+    value: 0.1
+weight_decay:
+    value: 0.05
