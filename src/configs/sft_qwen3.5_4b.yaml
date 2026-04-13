@@ -1,0 +1,96 @@
+model_id: "Qwen/Qwen3.5-4B"
+
+model:
+  name:                             "Qwen/Qwen3.5-4B"
+  torch_dtype:                      "bfloat16"
+  load_in_8bit:                     True
+  llm_int8_threshold:               6.0
+  llm_int_skip_modules:             "none"
+  llm_int8_enable_fp32_cpu_offload: True
+  attn_implementation:              "flash_attention_2"
+  device_map:                       "cuda:0"
+  trust_remote_code:                True
+
+dataset:
+  path:                             "./data/processed/cybersecurity_sft_dataset"
+  max_length:                       1024
+  column:                           "messages"
+  padding_side:                     "right"
+  truncation_side:                  "left"     
+  packing:                          False
+
+lora_config: 
+  r:                                64     # higher rank for larger models
+  lora_alpha:                       128    # r * 2 is a common choice
+  lora_dropout:                     0.05
+  bias:                             "none"
+  task_type:                        "CAUSAL_LM"
+  use_rslora:                       True
+  target_modules:                   [
+    "q_proj", "k_proj", "v_proj", "o_proj",
+    "gate_proj", "up_proj", "down_proj"
+  ]
+
+training:
+  output_dir:                       "./checkpoints/qwen3.5-4b-sft"
+  logging_dir:                      "./logs/qwen3.5-4b-sft"
+  num_train_epochs:                 3
+  per_device_train_batch_size:      32
+  per_device_eval_batch_size:       32
+  gradient_accumulation_steps:      2       # effective batch size = batch_size * accumulation_steps = 32 * 2 = 64
+  learning_rate:                    2.0e-4  # smaller LR for larger qlora models
+  lr_scheduler_type:                "cosine"
+  warmup_ratio:                     0.03
+  weight_decay:                     0.01
+  max_grad_norm:                    1.0
+  optim:                            "paged_adamw_32bit"
+  bf16:                             True
+  fp16:                             False
+  tf32:                             False
+  dataloader_num_workers:           8
+  dataloader_pin_memory:            True
+  remove_unused_columns:            False
+  logging_steps:                    400 # log every 400 steps 
+  report_to:                        "wandb"
+  eval_strategy:                    "steps"
+  eval_steps:                       400 # evaluate every 400 steps
+  save_strategy:                    "steps"
+  save_steps:                       400 # save checkpoint every 400 steps
+  save_total_limit:                 4   # keep only the last 4 checkpoints
+  load_best_model_at_end:           True
+  metric_for_best_model:            "eval_loss"
+  greater_is_better:                False
+  assistant_only_loss:              False
+  dataset_text_field:               "text"
+  seed:                             42
+  neftune_noise_alpha:              0.002
+
+evaluation:
+  model_path:                       "./models/qwen3.5-4b-lora-sft/"
+  output_dir:                       "./outputs/qwen3.5-4b/evaluation"
+  torch_dtype:                      "bfloat16"
+  trust_remote_code:                True
+  use_cache:                        True
+  padding:                          True
+  truncation:                       True
+  padding_side:                     "left"
+
+  batch_size:                       16
+  max_new_tokens:                   2048
+  max_length:                       4096
+  do_sample:                        True
+  per_dataset_metrics:              True
+
+wandb:      
+  project:                          "cybersec-reasoner"
+  run_name:                         "qwen3.5-4b-lora-sft"
+  entity:                           "circuit"
+  tags:                             ["qwen3.5", "4b", "sft", "lora", "cybersecurity"]
+  notes:                            "Fine-tuning Qwen3.5-4B with QLoRA on 100K dataset with r=64, alpha=128, lr=2e-4, batch size=64."
+  log_model:                        False
+
+paths:      
+  final_adapter_dir:                "./models/adapter/qwen3.5-4b-lora-sft/"
+  merged_model_dir:                 "./models/qwen3.5-4b-lora-sft/"
+  tokenizer_save_dir:               "./models/qwen3.5-4b-lora-sft/"
+  plots_dir:                        "./plots"
