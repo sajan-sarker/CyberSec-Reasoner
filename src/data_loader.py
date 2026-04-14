@@ -47,3 +47,15 @@ def apply_qwen_chat_template(data, tokenizer, column="messages"):
         add_generation_prompt=True
     )
     return {"text": text}
+
+def format_for_grpo(data):
+    """ Format the data for GRPO training - extract the prompt and answer from the messages """
+    data = data['messages']
+    prompt = [
+        data[0],
+        data[1],
+    ]
+    return {
+        "prompt": prompt,
+        "answer": data[-1]['content']
+    }
