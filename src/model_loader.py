@@ -3,6 +3,7 @@ import torch
 
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import LoraConfig, TaskType, get_peft_model
+from vllm import LLM, SamplingParams
 
 logger = logging.getLogger(__name__)
 
@@ -100,3 +101,21 @@ def create_lora_config(cfg):
                 f"\ntarget_modules={cfg['target_modules']}, ")
     
     return config
+
+def load_vllm_model(cfg):
+    """ Load the VLLM model for evaluation """
+    logger.info(f"Loading vLLM model: {cfg['model_path']} with torch_dtype={cfg['torch_dtype']} and gpu_memory_utilization={cfg['gpu_memory_utilization']}...")
+    llm = LLM(
+        model=cfg["model_path"],
+        tensor_parallel_size=cfg["tensor_parallel_size"],
+        dtype=cfg["torch_dtype"],
+        gpu_memory_utilization=cfg["gpu_memory_utilization"],
+    )
+
+    sampling_params = SamplingParams(
+        temperature=cfg["temperature"],
+        top_p=cfg["top_p"],
+        max_new_tokens=cfg["max_new_tokens"],
+    )
+    logger.info(f"vLLM model {cfg['model_path']} loaded.")
+    return llm, sampling_params
