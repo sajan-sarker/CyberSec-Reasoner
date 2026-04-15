@@ -1,0 +1,6 @@
+This directory is intended to store trained model checkpoints.
+
+The actual checkpoint files are not included in this repository because:
+- They are very large.
+- GitHub has file size limits (100MB per file).
+- Storing large binaries in Git is not recommended.
