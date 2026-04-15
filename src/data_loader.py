@@ -59,3 +59,16 @@ def format_for_grpo(data):
         "prompt": prompt,
         "answer": data[-1]['content']
     }
+
+def split_prompt_and_target(data, tokenizer):
+    """ Split the prompt and target from the messages - for evaluation """
+    prompt_msg = [
+        data['messages'][:-1]
+    ]
+    prompt = tokenizer.apply_chat_template(
+        prompt_msg,
+        tokenize=False,
+        add_generation_prompt=True
+    )
+
+    return prompt, data['messages'][-1]['content']
