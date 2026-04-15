@@ -222,11 +222,11 @@ def build_grpo_trainer(model, tokenizer, dataset, grpo_config, lora_config, rewa
         processing_class=tokenizer,
         train_dataset=dataset,
         args=grpo_config,
-        reward_fn=[reward_fn]
+        reward_funcs=[reward_fn]
     )
 
     # calculate total training steps manually
-    num_samples        = len(dataset["train"])
+    num_samples        = len(dataset)
     batch_size         = grpo_config.per_device_train_batch_size
     grad_accum         = grpo_config.gradient_accumulation_steps
     epochs             = grpo_config.num_train_epochs
@@ -236,7 +236,7 @@ def build_grpo_trainer(model, tokenizer, dataset, grpo_config, lora_config, rewa
     logger.info("GRPOTrainer initialized successfully.")
     logger.info(f"Number of trainable parameters    : {sum(p.numel() for p in model.parameters() if p.requires_grad):,}")
     logger.info(f"Number of non-trainable parameters: {sum(p.numel() for p in model.parameters() if not p.requires_grad):,}")
-    logger.info(f"Reward function(s) provided       : {trainer.reward_fn}")
+    logger.info(f"Reward function(s) provided       : {trainer.reward_funcs}")
     logger.info(f"Effective batch size (per_device * grad_accum): {batch_size * grad_accum}")
     logger.info(f"Steps per epoch                   : {steps_per_epoch}")
     logger.info(f"Total training steps              : {total_steps}")
