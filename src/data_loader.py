@@ -61,14 +61,17 @@ def format_for_grpo(data):
     }
 
 def split_prompt_and_target(data, tokenizer):
-    """ Split the prompt and target from the messages - for evaluation """
-    prompt_msg = [
-        data['messages'][:-1]
-    ]
+    """Split prompt and target from messages for evaluation."""
+
+    # correct: pass list of messages directly (not nested)
+    prompt_messages = data["messages"][:-1]
+
     prompt = tokenizer.apply_chat_template(
-        prompt_msg,
+        prompt_messages,
         tokenize=False,
         add_generation_prompt=True
     )
 
-    return prompt, data['messages'][-1]['content']
+    reference = data["messages"][-1]["content"]
+
+    return prompt, reference
