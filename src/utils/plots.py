@@ -1,3 +1,4 @@
+import os
 import logging
 import matplotlib.pyplot as plt
 
@@ -45,5 +46,28 @@ def plot_metrics(results, msg="Evaluation Metrics", save_dir="./plots"):
         plt.text(i, score + 0.01, f"{score:.4f}", ha='center', va='bottom')
     plt.legend()
     plt.savefig(f"{save_dir}/{msg}.png")
+    plt.close()
+    logger.info(f"{msg} saved at: {save_dir}/{msg}.png")
+
+def plot_grpo_metrics(results, msg="GRPO Model Evaluation Metrics", save_dir="./plots"):
+    """ Plots the evaluation metrics as a bar chart. """
+    filtered_results = {k: v for k, v in results.items() if k != "eval/num_samples"}
+    metrics = [k.replace("eval/", "") for k in filtered_results.keys()]
+    metrics = [k.replace("eval/", "").replace("_", " ").title() for k in filtered_results.keys()]
+    scores = [v * 100 for v in filtered_results.values()]
+
+    plt.figure(figsize=(10, 5))
+    plt.bar(metrics, scores)
+    plt.title(msg)
+    plt.xlabel('Metrics')
+    plt.ylabel('Scores (%)')
+    plt.ylim(0, 100)
+
+    for i, score in enumerate(scores):
+        plt.text(i, score + 1, f"{score:.2f}", ha='center', va='bottom')
+
+    os.makedirs(save_dir, exist_ok=True)
+    file_path = os.path.join(save_dir, f"{msg}.png")
+    plt.savefig(file_path)
     plt.close()
     logger.info(f"{msg} saved at: {save_dir}/{msg}.png")
