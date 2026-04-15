@@ -66,20 +66,18 @@ training:
   neftune_noise_alpha:              0.002
 
 evaluation:
-  model_path:                       "./models/qwen3.5-4b-lora-sft/"
-  output_dir:                       "./outputs/qwen3.5-4b/evaluation"
+  name:                             "./models/qwen3.5-4b-lora-sft/"
+  output_dir:                       "./outputs/qwen3.5-4b-sft-eval"
   torch_dtype:                      "bfloat16"
+  attn_implementation:              "sdpa"
   trust_remote_code:                True
-  use_cache:                        True
-  padding:                          True
-  truncation:                       True
-  padding_side:                     "left"
-
-  batch_size:                       16
-  max_new_tokens:                   2048
-  max_length:                       4096
-  do_sample:                        True
-  per_dataset_metrics:              True
+  device_map:                       "cuda:0"
+  max_input_length:                 512
+  max_new_tokens:                   1024
+  do_sample:                        False
+  temperature:                      0.0
+  top_p:                            0.95
+  batch_size:                       64
 
 wandb:      
   project:                          "cybersec-reasoner"
