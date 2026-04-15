@@ -3,7 +3,6 @@ import torch
 
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import LoraConfig, TaskType, get_peft_model
-from vllm import LLM, SamplingParams
 
 logger = logging.getLogger(__name__)
 
@@ -48,6 +47,25 @@ def load_base_model(cfg):
     model.config.use_cache = False  # Disable caching for training
 
     logger.info(f"Based model {model_name} loaded with {sum(p.numel() for p in model.parameters()):,} parameters.")
+    logger.info(f"Model Loaded on device: {next(model.parameters()).device}")
+    return model
+    
+def load_base_model_for_evaluation(cfg):
+    """ Load the base model """
+    model_name = cfg['name']
+    
+    logger.info(f"Loading base model: {model_name} with torch_dtype={cfg['torch_dtype']} and attn_implementation={cfg['attn_implementation']}...")
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        torch_dtype=getattr(torch, cfg["torch_dtype"]),
+        attn_implementation=cfg['attn_implementation'],
+        trust_remote_code=cfg["trust_remote_code"],
+        device_map=cfg["device_map"]
+    )
+
+    model.config.use_cache = True  # enable caching for evaluation
+
+    logger.info(f"Based model {model_name} loaded for evaluation with {sum(p.numel() for p in model.parameters()):,} parameters.")
     logger.info(f"Model Loaded on device: {next(model.parameters()).device}")
     return model
 
@@ -101,21 +119,3 @@ def create_lora_config(cfg):
                 f"\ntarget_modules={cfg['target_modules']}, ")
     
     return config
-
-def load_vllm_model(cfg):
-    """ Load the VLLM model for evaluation """
-    logger.info(f"Loading vLLM model: {cfg['model_path']} with torch_dtype={cfg['torch_dtype']} and gpu_memory_utilization={cfg['gpu_memory_utilization']}...")
-    llm = LLM(
-        model=cfg["model_path"],
-        tensor_parallel_size=cfg["tensor_parallel_size"],
-        dtype=cfg["torch_dtype"],
-        gpu_memory_utilization=cfg["gpu_memory_utilization"],
-    )
-
-    sampling_params = SamplingParams(
-        temperature=cfg["temperature"],
-        top_p=cfg["top_p"],
-        max_new_tokens=cfg["max_new_tokens"],
-    )
-    logger.info(f"vLLM model {cfg['model_path']} loaded.")
-    return llm, sampling_params
