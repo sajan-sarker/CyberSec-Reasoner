@@ -7,6 +7,10 @@ __pycache__/
 temp.py
 temp.ipynb
 
+# ignore larger model directories
+checkpoints/
+models/
+
 # C extensions
 *.so
 
