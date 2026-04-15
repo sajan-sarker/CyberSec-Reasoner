@@ -29,3 +29,21 @@ def plot_learning_curve(trainer, msg="Learning Curve", save_dir="./plots"):
     plt.savefig(path)
     plt.close()
     logger.info(f"{msg} saved at: {path}")
+
+def plot_metrics(results, msg="Evaluation Metrics", save_dir="./plots"):
+    """ Plots the evaluation metrics as a bar chart. """
+    metrics = list(results.keys())
+    scores = list(results.values())
+
+    plt.figure(figsize=(10, 5))
+    plt.bar(metrics, scores, color=['blue', 'orange', 'green'])
+    plt.title(f"{msg}")
+    plt.xlabel('Metrics')
+    plt.ylabel('Scores')
+    plt.ylim(0, max(scores) * 1.2)
+    for i, score in enumerate(scores):
+        plt.text(i, score + 0.01, f"{score:.4f}", ha='center', va='bottom')
+    plt.legend()
+    plt.savefig(f"{save_dir}/{msg}.png")
+    plt.close()
+    logger.info(f"{msg} saved at: {save_dir}/{msg}.png")
