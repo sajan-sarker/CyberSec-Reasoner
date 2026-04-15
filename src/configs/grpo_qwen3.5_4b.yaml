@@ -1,0 +1,102 @@
+model_id: "Qwen/Qwen3.5-4B"
+
+model:
+  name:                             "./models/qwen3.5-4b-lora-rsft/"
+  torch_dtype:                      "bfloat16"
+  load_in_8bit:                     True
+  llm_int8_threshold:               6.0
+  llm_int_skip_modules:             "none"
+  llm_int8_enable_fp32_cpu_offload: True
+  attn_implementation:              "flash_attention_2"
+  device_map:                       "cuda:0"
+  trust_remote_code:                True
+
+dataset:
+  path:                             "./data/processed/primus_reasoning_cwe_mapping_dataset"
+  max_length:                       2056
+  column:                           "messages"
+  padding_side:                     "right"
+  truncation_side:                  "left" 
+  packing:                          False
+
+lora_config: 
+  r:                                16
+  lora_alpha:                       32    # r * 2 is a common choice
+  lora_dropout:                     0.05
+  bias:                             "none"
+  task_type:                        "CAUSAL_LM"
+  use_rslora:                       True
+  target_modules:                   [
+    "q_proj", "k_proj", "v_proj", "o_proj",
+    "gate_proj", "up_proj", "down_proj"
+  ]
+
+training:
+  output_dir:                       "./checkpoints/qwen3.5-4b-grpo"
+  logging_dir:                      "./logs/qwen3.5-4b-grpo"
+  num_train_epochs:                 1
+  per_device_train_batch_size:      8
+  gradient_accumulation_steps:      4       # effective batch size = batch_size * accumulation_steps = 8 * 4 = 32
+  num_generations:                  2       # number of generations for GRPO
+  max_completion_length:            2056    # max length of generated completions
+  learning_rate:                    1.0e-5  
+  lr_scheduler_type:                "cosine"
+  warmup_ratio:                     0.05
+  weight_decay:                     0.01
+  max_grad_norm:                    1.0
+  optim:                            "paged_adamw_32bit"
+  bf16:                             True
+  fp16:                             False
+  tf32:                             False
+  loss_type:                        "dapo" # "dapo" for Decoupled Advantage Policy Optimization, "ppo" for Proximal Policy Optimization
+  epsilon:                          0.2    # PPO clipping epsilon 
+  scale_rewards:                    "group"
+  mask_truncated_completions:       True
+  temperature:                      0.7
+  top_p:                            0.90  # nucleus sampling for generation
+  repetition_penalty:               1.05
+  dataloader_num_workers:           8
+  dataloader_pin_memory:            True
+  remove_unused_columns:            False
+  logging_steps:                    10 # log every 10 steps
+  report_to:                        "wandb"
+  save_strategy:                    "steps"
+  save_steps:                       40 # save checkpoint every 20 steps
+  save_total_limit:                 3   # keep only the last 3 checkpoints
+  load_best_model_at_end:           False
+  seed:                             42
+
+evaluation:
+  name:                             "./models/qwen3.5-4b-lora-grpo/"
+  output_dir:                       "./outputs/qwen3.5-4b-grpo-eval"
+  data_path:                        "./data/processed/grpo_evaluation_dataset"
+  torch_dtype:                      "bfloat16"
+  attn_implementation:              "sdpa"
+  device_map:                       "cuda:0"
+  trust_remote_code:                True
+  use_cache:                        True
+  padding_side:                     "left"       # left padding for generation
+  dataset_path:                     "./data/processed/primus_reasoning_cwe_mapping_dataset"
+  dataset_split:                    "test"
+  batch_size:                       32
+  max_length:                       512
+  max_new_tokens:                   1024
+  temperature:                      0.7
+  top_p:                            0.90  # nucleus sampling for generation
+  repetition_penalty:               1.05
+  do_sample:                        True
+  generations_file:                 "./outputs/qwen3.5-4b-grpo-eval/generations.json"
+  
+wandb:      
+  project:                          "cybersec-reasoner"
+  run_name:                         "qwen3.5-4b-qlora-grpo"
+  entity:                           "circuit"
+  tags:                             ["qwen3.5", "reasoning", "4b", "rl", "grpo", "qlora", "cybersecurity"]
+  notes:                            "GRPO reinforcement learning on Qwen3.5-4B two step SFT finetuned model with QLoRA on 2K Primus-Reasoning cve to cwe mapping dataset with r=32, alpha=64, lr=1e-5, samples=2, batch size=16."
+  log_model:                        False
+
+paths:      
+  final_adapter_dir:                "./models/adapter/qwen3.5-4b-lora-grpo/"
+  merged_model_dir:                 "./models/qwen3.5-4b-lora-grpo/"
+  tokenizer_save_dir:               "./models/qwen3.5-4b-lora-grpo/"
+  plots_dir:                        "./plots"
