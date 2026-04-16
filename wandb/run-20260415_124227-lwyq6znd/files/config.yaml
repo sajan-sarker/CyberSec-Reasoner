@@ -1,0 +1,97 @@
+_wandb:
+    value:
+        cli_version: 0.25.1
+        e:
+            jpw02r8qrsszgl2v20oiao9wgxa93jih:
+                cpu_count: 20
+                cpu_count_logical: 20
+                disk:
+                    /:
+                        total: "747760488448"
+                        used: "121827516416"
+                email: sajan.k.sarker@gmail.com
+                executable: /opt/venv/bin/python
+                git:
+                    commit: a1ab308fc2a3057397b2265bdfb51325b8b5bf4a
+                    remote: https://github.com/Mahdi-CV/rocm-pytorch-notebooks
+                gpu: N/A
+                gpu_amd:
+                    - id: "0"
+                      maxPower: "750.0"
+                      mclkRange: 900Mhz - 1300Mhz
+                      model: "0x74b5"
+                      performanceLevel: auto
+                      sclkRange: 500Mhz - 2100Mhz
+                      series: N/A
+                      sku: M3000100
+                      uniqueId: "0x43529fe3ce00c724"
+                      vbiosVersion: 113-M3000100-103
+                      vendor: Advanced Micro Devices, Inc. [AMD/ATI]
+                gpu_count: 1
+                host: c74b082c5b04
+                memory:
+                    total: "253347155968"
+                os: Linux-6.8.0-84-generic-x86_64-with-glibc2.35
+                program: -m evaluation.grpo_evaluation
+                python: CPython 3.10.12
+                root: /shared-docker/CyberSec-Reasoner
+                startedAt: "2026-04-15T12:42:27.220201Z"
+                writerId: jpw02r8qrsszgl2v20oiao9wgxa93jih
+        m: []
+        python_version: 3.10.12
+        t:
+            "1":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 98
+                - 100
+                - 105
+            "2":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 98
+                - 100
+                - 105
+            "3":
+                - 2
+                - 13
+                - 15
+                - 16
+            "4": 3.10.12
+            "5": 0.25.1
+            "6": 5.5.1
+            "10":
+                - 21
+            "12": 0.25.1
+            "13": linux-x86_64
+entity:
+    value: circuit
+log_model:
+    value: false
+notes:
+    value: GRPO reinforcement learning on Qwen3.5-4B two step SFT finetuned model with QLoRA on 2K Primus-Reasoning cve to cwe mapping dataset with r=32, alpha=64, lr=1e-5, samples=2, batch size=16.
+project:
+    value: cybersec-reasoner
+run_name:
+    value: qwen3.5-4b-qlora-grpo
+tags:
+    value:
+        - qwen3.5
+        - reasoning
+        - 4b
+        - rl
+        - grpo
+        - qlora
+        - cybersecurity
