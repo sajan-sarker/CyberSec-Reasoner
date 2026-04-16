@@ -10,6 +10,7 @@ temp.ipynb
 # ignore larger model directories
 checkpoints/
 models/
+outputs/ 
 
 # C extensions
 *.so
