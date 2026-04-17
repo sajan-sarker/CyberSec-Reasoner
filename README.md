@@ -124,7 +124,6 @@ $$\text{Total Reward} = 0.5 \cdot R_{\text{cwe}} + 0.3 \cdot R_{\text{format}} +
 
 ```bash
 pip install --upgrade transformers==5.5.4
-pip install torch accelerate
 ```
 
 ### Option 1 — Quick Start with Wrapper Class (Recommended)
