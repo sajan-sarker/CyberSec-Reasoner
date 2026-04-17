@@ -1,7 +1,6 @@
 # 🔐 CyberSec-Reasoner 
 
-> **A Three-Stage Supervised Reasoning + GRPO Fine-Tuned LLM for Cybersecurity Vulnerability Analysis**
-A 3-stage Post-Trained Reasoning LLM 
+> **A Three-Stage Post-Trained Reasoning LLM (Supervised Reasoning + GRPO Fine-Tuned) for Cybersecurity Vulnerability Analysis, optimized for CVE → CWE mapping with structured outputs.**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/sajan-sarker/CyberSec-Reasoner/blob/main/LICENSE)
 [![Model: Qwen3.5-4B](https://img.shields.io/badge/Base%20Model-Qwen3.5--4B-orange)](https://huggingface.co/Qwen/Qwen3.5-4B)
